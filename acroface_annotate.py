@@ -127,7 +127,7 @@ class EncryptedDatasetItem:
         self.bytes = None
         self.awaited = None
 
-def discover_data(data_directory: Path, suffix_whitelist=('.jpeg', '.png')):
+def discover_data(data_directory: Path, suffix_whitelist=('.jpeg', '.png', '.enc')):
     files = [file for file in data_directory.iterdir() if file.suffix in suffix_whitelist]
     # files_listing = data_directory / 'data_file.txt'
     # if files_listing.exists():
