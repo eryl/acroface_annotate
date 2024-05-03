@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#import multiprocessing
-import multiprocessing.dummy as multiprocessing
+import multiprocessing
+#import multiprocessing.dummy as multiprocessing
 import argparse
 
 import importlib
@@ -18,7 +18,7 @@ import numpy as np
 
 import aes
 
-target_size = (512, 512)
+target_size = (1200, 400)
 
 def alpha_composite(front, back):
     """Alpha composite two RGBA images.
@@ -97,7 +97,7 @@ def encrypt_file(work_package):
     #print(f"Encrypting {path}")
     pil_image = Image.open(image_path)
     pil_image = alpha_composite_with_color(pil_image).convert('RGB')
-    pil_image = cover(pil_image, target_size)
+    pil_image = ImageOps.contain(pil_image, target_size)
     output_buffer = io.BytesIO()
     pil_image.save(output_buffer, format=format)
     encrypted_file = aes.encrypt(bytes_password, output_buffer.getvalue())
