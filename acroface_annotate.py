@@ -17,8 +17,8 @@ import aes
 from PIL import Image
 
 WINDOW_SIZE = (1200, 800)
-IMAGE_SIZE = (400*3, 400)
-N_PROCESSES = 2
+IMAGE_SIZE = (1200, 400)
+N_PROCESSES = 6
 MAX_QUEUE = N_PROCESSES
 ENCRYPTED_DATA_DIR = Path("encrypted_data")
 UNENCRYPTED_DATA_DIR = Path("data")
@@ -403,12 +403,12 @@ def main():
         file = dataset.get_file_name(i)
         image_arr = np.array(pil_image, order="C")  # convert to numpy array with shape width, height, channels
         image_arr = (image_arr.astype(float) / 255.0)  # convert to float in 0--1 range, assuming image is 8-bit uint.
-
+        height, width = image_arr.shape[:2]
         image_stim = visual.ImageStim(mywin, 
                                     image_arr[::-1],
                                     units="pix",
                                     pos=(0, 0),
-                                    size=IMAGE_SIZE,  # here's a gotcha: need to pass the size (x, y) explicitly.
+                                    size=(width, height),  # here's a gotcha: need to pass the size (x, y) explicitly.
                                     colorSpace="rgb1")  # img_as_float converts to 0:1 range, whereas PsychoPy defaults to -1:1.
         
         annotation_stim.text = ""
